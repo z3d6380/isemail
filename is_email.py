@@ -1129,6 +1129,8 @@ def is_email(email, checkDNS=False, errorlevel=False, parsedata=[]):
                     return_status.append(ISEMAIL_DNSWARN_NO_RECORD)  # No usable records for the domain can be found
                 except dns.resolver.NoNameservers:
                     return_status.append(ISEMAIL_DNSWARN_NO_RECORD)
+            except dns.resolver.NoNameservers:
+                return_status.append(ISEMAIL_DNSWARN_NO_RECORD)
         except dns.resolver.NXDOMAIN:
             return_status.append(ISEMAIL_DNSWARN_NO_RECORD)  # Domain can't be found in DNS
         except dns.resolver.NoNameservers:
