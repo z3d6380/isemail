@@ -1182,16 +1182,16 @@ def is_email(email, checkDNS=False, errorlevel=False, parsedata=[]):
 
     return final_status if diagnose else (final_status < ISEMAIL_THRESHOLD)
 
-if __name__ == '__main__':
-    email = 'test.&#x240D;&#x240A;&#x240D;&#x240A; obs@syntax.com'
-    email_validity = is_email(email, True, True)
+# if __name__ == '__main__':
+#     email = 'test.&#x240D;&#x240A;&#x240D;&#x240A; obs@syntax.com'
+#     email_validity = is_email(email, True, True)
     
-    # Get the literal name of the result code
-    result_name = result_codes.get(email_validity, "Unknown result code")
+#     # Get the literal name of the result code
+#     result_name = result_codes.get(email_validity, "Unknown result code")
     
-    if email_validity == ISEMAIL_VALID:
-        print(f"Success! {email} is valid ({result_name} - {int(email_validity)})")
-    elif email_validity < ISEMAIL_THRESHOLD:
-        print(f"Warning! {email} has unusual features ({result_name} - {int(email_validity)})")
-    else:
-        print(f"{email} is not a valid email address ({result_name} - {int(email_validity)})")
+#     if email_validity == ISEMAIL_VALID:
+#         print(f"Success! {email} is valid ({result_name} - {int(email_validity)})")
+#     elif email_validity < ISEMAIL_THRESHOLD:
+#         print(f"Warning! {email} has unusual features ({result_name} - {int(email_validity)})")
+#     else:
+#         print(f"{email} is not a valid email address ({result_name} - {int(email_validity)})")
