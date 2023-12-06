@@ -5,7 +5,7 @@ To validate an email address according to RFCs 5321, 5322 and others
 
 Copyright © 2008-2016, Dominic Sayers					
 Test schema documentation Copyright © 2011, Daniel Marschall
-Python derivative Copyright © 2023, Luis Moraguez	
+Python port/derivative Copyright © 2023, Luis Moraguez	
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -1128,13 +1128,13 @@ def is_email(email, checkDNS=False, errorlevel=False, parsedata=[]):
                 except dns.resolver.NoAnswer:
                     return_status.append(ISEMAIL_DNSWARN_NO_RECORD)  # No usable records for the domain can be found
                 except dns.resolver.NoNameservers:
-                    return_status.append(ISEMAIL_DNSWARN_NO_RECORD)
+                    return_status.append(ISEMAIL_DNSWARN_NO_RECORD) # Only needed to get GitHub Actions to pass
             except dns.resolver.NoNameservers:
-                return_status.append(ISEMAIL_DNSWARN_NO_RECORD)
+                return_status.append(ISEMAIL_DNSWARN_NO_RECORD) # Only needed to get GitHub Actions to pass
         except dns.resolver.NXDOMAIN:
             return_status.append(ISEMAIL_DNSWARN_NO_RECORD)  # Domain can't be found in DNS
         except dns.resolver.NoNameservers:
-            return_status.append(ISEMAIL_DNSWARN_NO_RECORD)
+            return_status.append(ISEMAIL_DNSWARN_NO_RECORD) # Only needed to get GitHub Actions to pass
 
     # Check for TLD addresses
 	# -----------------------
