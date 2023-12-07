@@ -34,7 +34,9 @@ jobs:
       run: |
         pip install -r requirements.txt -t ./package
         cp is_email.py lambda_function.py ./package
-        zip -r function.zip ./package/.
+        cd ./package
+        zip -r function.zip .
+        cd ..
 
     - name: Update Lambda function
       run: |
