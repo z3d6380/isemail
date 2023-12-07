@@ -40,7 +40,7 @@ jobs:
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/prod" ]]; then
           FUNCTION_NAME="isemail-prod"
-        else if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+        elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
           FUNCTION_NAME="isemail-dev"
         else
           exit 1
