@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Run Unit Tests"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install AWS CLI
+      run: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+
+    - name: Configure AWS credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set default.region ${{ secrets.AWS_REGION }}
+
+    - name: Package function code
+      run: |
+        pip install -r requirements.txt -t ./package
+        cp is_email.py lambda_function.py ./package
+        zip -r function.zip ./package/.
+
+    - name: Update Lambda function
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          FUNCTION_NAME="my-function-prod"
+        else if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+          FUNCTION_NAME="my-function-dev"
+        else
+          exit 1
+        fi
+        aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://function.zip
